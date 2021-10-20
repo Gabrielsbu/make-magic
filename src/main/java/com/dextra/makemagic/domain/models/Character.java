@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-
 @Entity(name = "characters")
 @Getter
 @Setter
@@ -17,7 +16,6 @@ public class Character {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "character_id", updatable = false, unique = true, nullable = false)
     private Long characterId;
 
     @Column(name = "character_name")

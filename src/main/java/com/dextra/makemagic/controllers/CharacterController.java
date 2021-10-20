@@ -3,8 +3,11 @@ package com.dextra.makemagic.controllers;
 import com.dextra.makemagic.domain.dto.CharacterDTO;
 import com.dextra.makemagic.domain.dto.CreateCharacterDTO;
 import com.dextra.makemagic.domain.dto.UpdatedCharacterDTO;
+import com.dextra.makemagic.domain.repositories.params.CharacterFilterParams;
 import com.dextra.makemagic.domain.services.CharacterService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +22,8 @@ public class CharacterController {
     private final CharacterService characterService;
 
     @GetMapping
-    public List<CharacterDTO> searchAllCharacters() {
-        return characterService.findAllCharacters();
+    public Page<CharacterDTO> getAllCharacters(CharacterFilterParams param, @RequestParam int page, @RequestParam int qtd) {
+        return characterService.searchAllCharacters(param, page, qtd);
     }
 
     @GetMapping("/{characterId}")
@@ -29,7 +32,7 @@ public class CharacterController {
     }
 
     @PostMapping
-    public CharacterDTO createCharacter(@RequestBody CreateCharacterDTO createCharacter) {
+    public CharacterDTO createCharacter(@RequestBody CreateCharacterDTO createCharacter) throws JsonProcessingException {
         return characterService.saveCharacter(createCharacter);
     }
 
