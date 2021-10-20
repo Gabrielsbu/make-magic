@@ -56,10 +56,12 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public CharacterDTO saveCharacter(CreateCharacterDTO createCharacter) {
-        boolean existHouse = findHouse(createCharacter.getHouse());
+        if(createCharacter.getHouse() != null) {
+            boolean existHouse = findHouse(createCharacter.getHouse());
 
-        if(!existHouse) {
-            throw new AllException("House not found", HttpStatus.NOT_FOUND);
+            if(!existHouse) {
+                throw new AllException("House not found", HttpStatus.NOT_FOUND);
+            }
         }
 
         Character character = Character.builder()
@@ -94,11 +96,36 @@ public class CharacterServiceImpl implements CharacterService {
         Character characterExistent = characterConverter
                 .toModel(findCharacterById(characterId));
 
-        characterExistent.setName(updatedCharacter.getName());
-        characterExistent.setRole(updatedCharacter.getRole());
-        characterExistent.setSchool(updatedCharacter.getSchool());
-        characterExistent.setHouse(updatedCharacter.getHouse());
-        characterExistent.setPatronus(updatedCharacter.getPatronus());
+        boolean existHouse = findHouse(updatedCharacter.getHouse());
+
+        if(!existHouse) {
+            throw new AllException("House not found", HttpStatus.BAD_REQUEST);
+        }
+
+        if(updatedCharacter.getName() != null) {
+            characterExistent.setName(updatedCharacter.getName());
+
+        }
+
+        if(updatedCharacter.getRole() != null) {
+            characterExistent.setRole(updatedCharacter.getRole());
+
+        }
+
+        if(updatedCharacter.getSchool() != null) {
+            characterExistent.setRole(updatedCharacter.getSchool());
+
+        }
+
+        if(updatedCharacter.getHouse() != null) {
+            characterExistent.setRole(updatedCharacter.getHouse());
+
+        }
+
+        if(updatedCharacter.getPatronus() != null) {
+            characterExistent.setPatronus(updatedCharacter.getPatronus());
+
+        }
 
         return characterConverter.toDTO(characterRepository.save(characterExistent));
     }

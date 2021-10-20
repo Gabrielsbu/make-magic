@@ -20,6 +20,7 @@ public class CharacterRepositoryCustomImpl implements CharacterRepositoryCustom 
 
     private final EntityManager entityManager;
 
+    //Criando a lista dinâmica de predicados
     private List<Predicate> createPredicateList(CharacterFilterParams params, CriteriaBuilder criteriaBuilder,
                                                 Root<Character> root) {
         Path<String> name = root.get("name");
@@ -29,7 +30,6 @@ public class CharacterRepositoryCustomImpl implements CharacterRepositoryCustom 
         Path<String> patronus = root.get("patronus");
 
         List<Predicate> predicates = new ArrayList<>();
-
 
         if (params.getName() != null) {
             predicates.add(criteriaBuilder.like(criteriaBuilder.lower(name), "%" + params.getName().toLowerCase() + "%"));
@@ -58,6 +58,7 @@ public class CharacterRepositoryCustomImpl implements CharacterRepositoryCustom 
         return predicates;
     }
 
+    //Método responsável por fazer a filtragem através dos predicados inseridos no criteria builder.
     @Override
     public Page<Character> getCharacterPageable(CharacterFilterParams param, Pageable pagination) {
 
@@ -67,6 +68,7 @@ public class CharacterRepositoryCustomImpl implements CharacterRepositoryCustom 
 
         List<Predicate> predicates = this.createPredicateList(param, criteriaBuilder, root);
 
+        //Ordena a busca no formato de uma pilha, onde o último a ser inserido, vai ser o primeiro na lista.
         query.orderBy(criteriaBuilder.desc(root.get(Character_.createdCharacterAt)));
 
         if (!predicates.isEmpty()) {
@@ -85,6 +87,7 @@ public class CharacterRepositoryCustomImpl implements CharacterRepositoryCustom 
         return new PageImpl<>(result, pagination, this.countElements(predicates));
     }
 
+    //apenas conta a quantidade de elemtos dentro do meu método de busca de personagens.
     private Long countElements(List<Predicate> predicates) {
         CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);

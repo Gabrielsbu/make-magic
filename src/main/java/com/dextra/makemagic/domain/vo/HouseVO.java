@@ -1,4 +1,4 @@
-package com.dextra.makemagic.domain.dto;
+package com.dextra.makemagic.domain.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

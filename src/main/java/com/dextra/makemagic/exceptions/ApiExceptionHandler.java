@@ -24,6 +24,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final MessageSource messageSource;
 
+    //Método responsável por criar a excessão personalizada utilizada neste sistema.
     @ExceptionHandler(AllException.class)
     public ResponseEntity<Object> handleException(AllException ex, WebRequest request) {
 
@@ -35,6 +36,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, problem, new HttpHeaders(), ex.getStatus(), request);
     }
 
+    //Método responsável por verificar se os campos obrigatórios foram informados.
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -48,7 +50,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         Problem problem = new Problem();
         problem.setStatus(status.value());
-        problem.setTitle("Verifique todos os campos obrigatórios!!");
+        problem.setTitle("Check all required fields");
         problem.setDateTime(LocalDateTime.now());
         problem.setFields(fields);
 

@@ -6,6 +6,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CharacterRepositoryCustom {
-
     Page<Character> getCharacterPageable(CharacterFilterParams params, Pageable pageable);
 }
