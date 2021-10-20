@@ -16,8 +16,9 @@ import java.util.UUID;
 public class Character {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID characterId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "character_id", updatable = false, unique = true, nullable = false)
+    private Long characterId;
 
     @Column(name = "character_name")
     private String name;

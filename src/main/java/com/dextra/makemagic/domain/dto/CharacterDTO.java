@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CharacterDTO {
 
-    private UUID characterId;
+    private Long characterId;
     private String name;
     private String role;
     private String school;

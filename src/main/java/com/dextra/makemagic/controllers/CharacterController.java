@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,6 +42,4 @@ public class CharacterController {
     public ResponseEntity<Void> deleteCharacterById(@PathVariable Long characterId) {
         return characterService.deleteCharacter(characterId);
     }
-
-
 }
