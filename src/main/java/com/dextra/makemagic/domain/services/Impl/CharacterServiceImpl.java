@@ -29,7 +29,7 @@ public class CharacterServiceImpl implements CharacterService {
     private final CharacterRepository characterRepository;
     private final CharacterConverter characterConverter;
 
-    @Value("api.key")
+    @Value("${api.key}")
     private String apiKey;
 
     //Método(getAllProfilePagination): responsável por buscar todos os personagens de forma paginada, método auxiliar para o searchAllCharacters
