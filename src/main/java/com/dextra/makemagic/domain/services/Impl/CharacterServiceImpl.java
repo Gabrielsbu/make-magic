@@ -29,11 +29,13 @@ public class CharacterServiceImpl implements CharacterService {
     private final CharacterRepository characterRepository;
     private final CharacterConverter characterConverter;
 
+    //Método(getAllProfilePagination): responsável por buscar todos os personagens de forma paginada, método auxiliar para o searchAllCharacters
     private Page<CharacterDTO> getAllProfilePagination(CharacterFilterParams param, Pageable pageable) {
         Page<Character> pageAuth = characterRepository.getCharacterPageable(param, pageable);
         return pageAuth.map(characterConverter::toDTO);
     }
 
+    //Método(searchAllCharacters): responsável por buscar todos os personagens.
     @Override
     public Page<CharacterDTO> searchAllCharacters(CharacterFilterParams param, int page, int qtd) {
         Pageable pageable = PageRequest.of(page, qtd);
@@ -47,12 +49,14 @@ public class CharacterServiceImpl implements CharacterService {
         return result;
     }
 
+    //Método(findCharacterById): responsável por buscar personagem por id.
     @Override
     public CharacterDTO findCharacterById(Long characterId) {
         return characterConverter.toDTO(characterRepository.findById(characterId)
                 .orElseThrow(() -> new AllException("Character not found", HttpStatus.NOT_FOUND)));
     }
 
+    //Método(saveCharacter): responsável por salvar personagem.
     @Override
     public CharacterDTO saveCharacter(CreateCharacterDTO createCharacter) {
         if(createCharacter.getHouse() != null) {
@@ -74,6 +78,8 @@ public class CharacterServiceImpl implements CharacterService {
         return characterConverter.toDTO(characterRepository.save(character));
     }
 
+    //Método(findHouse): responsável por buscar todas as casas de PotterAPI e retorna true ou false caso exista o nome informado pelo
+    // usuário no momento de cadastrar um personagem.
     private boolean findHouse(String houseName){
         RestTemplate restTemplate = new RestTemplate();
 
@@ -90,6 +96,7 @@ public class CharacterServiceImpl implements CharacterService {
         return jsonHouses.contains(houseName);
     }
 
+    //Método(updateCharacter): responsável por atualizar um personagem
     @Override
     public CharacterDTO updateCharacter(Long characterId, UpdatedCharacterDTO updatedCharacter) {
 
@@ -132,6 +139,7 @@ public class CharacterServiceImpl implements CharacterService {
         return characterConverter.toDTO(characterRepository.save(characterExistent));
     }
 
+    //Método(deleteCharacter): responsável por deletar um personagem
     @Override
     public ResponseEntity<Void> deleteCharacter(Long characterId) {
         Optional<Character> character = characterRepository.findById(characterId);
