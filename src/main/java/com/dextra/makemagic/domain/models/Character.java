@@ -32,6 +32,7 @@ public class Character {
     private String school;
 
     @Column(name = "character_house")
+    @NotEmpty
     private String house;
 
     @Column(name = "character_patronus")
