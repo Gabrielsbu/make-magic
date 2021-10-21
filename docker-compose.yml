@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  app:
+    container_name: make-magic
+    build: .
+    networks:
+      - "make-magic-network"
+    tty: true
+    ports:
+      - 8879:8080
+networks:
+  make-magic-network:
+    driver: bridge

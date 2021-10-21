@@ -24,7 +24,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class CharacterServiceImpl implements CharacterService {
 
     private final CharacterRepository characterRepository;
@@ -77,6 +76,7 @@ public class CharacterServiceImpl implements CharacterService {
 
     private boolean findHouse(String houseName){
         RestTemplate restTemplate = new RestTemplate();
+
         UriComponents uri = UriComponentsBuilder.newInstance().scheme("http").host("us-central1-rh-challenges.cloudfunctions.net")
                 .path("/potterApi/houses").queryParam("fields", "all").build();
 
@@ -96,10 +96,12 @@ public class CharacterServiceImpl implements CharacterService {
         Character characterExistent = characterConverter
                 .toModel(findCharacterById(characterId));
 
-        boolean existHouse = findHouse(updatedCharacter.getHouse());
+        if(updatedCharacter.getHouse() != null) {
+            boolean existHouse = findHouse(updatedCharacter.getHouse());
 
-        if(!existHouse) {
-            throw new AllException("House not found", HttpStatus.BAD_REQUEST);
+            if(!existHouse) {
+                throw new AllException("House not found", HttpStatus.NOT_FOUND);
+            }
         }
 
         if(updatedCharacter.getName() != null) {
