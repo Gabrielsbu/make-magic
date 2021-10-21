@@ -85,6 +85,4 @@ public class CharacterControllerIT {
         Assertions.assertThat(characterToDeleted).isNotNull();
         Assertions.assertThat(characterToDeleted.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
-
-
 }

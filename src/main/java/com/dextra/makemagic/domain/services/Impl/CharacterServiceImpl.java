@@ -78,7 +78,7 @@ public class CharacterServiceImpl implements CharacterService {
         return characterConverter.toDTO(characterRepository.save(character));
     }
 
-    //Método(findHouse): responsável por buscar todas as casas de PotterAPI e retorna true ou false caso exista o nome informado pelo
+    //Método(findHouse): responsável por buscar todas as casas de PotterAPI informando a key cadastrada e retorna true ou false caso exista o nome informado pelo
     // usuário no momento de cadastrar um personagem.
     private boolean findHouse(String houseName){
         RestTemplate restTemplate = new RestTemplate();
