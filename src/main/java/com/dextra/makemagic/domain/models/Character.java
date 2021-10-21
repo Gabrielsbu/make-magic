@@ -3,10 +3,8 @@ package com.dextra.makemagic.domain.models;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity(name = "characters")
 @Getter

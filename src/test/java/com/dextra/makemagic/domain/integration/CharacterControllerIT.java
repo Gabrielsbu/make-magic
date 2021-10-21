@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -18,8 +19,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Objects;
 
+@DisplayName("Tests integrations to Characters")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 public class CharacterControllerIT {
 
     @Autowired
@@ -38,7 +40,7 @@ public class CharacterControllerIT {
         Character character = testRestTemplate.getForObject("/v1/characters/{id}", Character.class, expectedId);
 
         Assertions.assertThat(character).isNotNull();
-        Assertions.assertThat(character).isNotNull().isExactlyInstanceOf(Character.class);
+        Assertions.assertThat(character).isExactlyInstanceOf(Character.class);
         Assertions.assertThat(character.getHouse()).isEqualTo(characterToBeSaved.getHouse());
         Assertions.assertThat(character.getName()).isEqualTo(characterToBeSaved.getName());
         Assertions.assertThat(character.getPatronus()).isEqualTo(characterToBeSaved.getPatronus());
