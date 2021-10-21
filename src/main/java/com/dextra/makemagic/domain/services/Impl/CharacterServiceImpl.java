@@ -108,6 +108,8 @@ public class CharacterServiceImpl implements CharacterService {
             if(!existHouse) {
                 throw new AllException("House not found", HttpStatus.NOT_FOUND);
             }
+
+            characterExistent.setHouse(updatedCharacter.getHouse());
         }
 
         if(updatedCharacter.getName() != null) {
