@@ -10,6 +10,7 @@ import com.dextra.makemagic.domain.services.CharacterService;
 import com.dextra.makemagic.exceptions.AllException;
 import com.dextra.makemagic.utils.CharacterConverter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,9 @@ public class CharacterServiceImpl implements CharacterService {
 
     private final CharacterRepository characterRepository;
     private final CharacterConverter characterConverter;
+
+    @Value("${api.key}")
+    private String apiKey;
 
     //Método(getAllProfilePagination): responsável por buscar todos os personagens de forma paginada, método auxiliar para o searchAllCharacters
     private Page<CharacterDTO> getAllProfilePagination(CharacterFilterParams param, Pageable pageable) {
@@ -80,13 +84,14 @@ public class CharacterServiceImpl implements CharacterService {
     //Método(findHouse): responsável por buscar todas as casas de PotterAPI informando a key cadastrada e retorna true ou false caso exista o nome informado pelo
     // usuário no momento de cadastrar um personagem.
     private boolean findHouse(String houseName){
+
         RestTemplate restTemplate = new RestTemplate();
 
         UriComponents uri = UriComponentsBuilder.newInstance().scheme("http").host("us-central1-rh-challenges.cloudfunctions.net")
                 .path("/potterApi/houses").queryParam("fields", "all").build();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("apiKey", "baa4d5e1-fcbf-479a-8e9f-660035757ff4");
+        headers.add("apiKey", apiKey);
 
         HttpEntity<String> entity = new HttpEntity<>(uri.toString(), headers);
 

@@ -25,7 +25,7 @@ public class CharacterController {
     public Page<CharacterDTO> getAllCharacters(CharacterFilterParams param, @RequestParam int page, @RequestParam int qtd) {
         return characterService.searchAllCharacters(param, page, qtd);
     }
-
+    
     //Método (searchCharacterById): Responsável por buscar apenas um personagem por ID no banco de dados.
     @GetMapping("/{characterId}")
     public CharacterDTO searchCharacterById(@PathVariable Long characterId) {

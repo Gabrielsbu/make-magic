@@ -7,7 +7,7 @@ services:
       - "make-magic-network"
     tty: true
     ports:
-      - 8879:8080
+      - 8080:8080
 networks:
   make-magic-network:
     driver: bridge
