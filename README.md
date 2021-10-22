@@ -8,7 +8,12 @@
 
 ![gifcomputacao](https://github.com/Gabrielsbu/Gifs/blob/main/comecando.gif)
 
-### Primeiro precisamos realizar algumas configurações.
+### Pontos importantes
+
+#### O sistema está online no GCP (Google Cloud) de forma Dockerizada, então estou enviando uma versão do sistema online.
+#### O método de buscar os characters está paginado e possui diversos filtros utilizando o Criteria Builder, sejam eles: buscar pela house, pelo name, patronus, school e role. 
+#### Foram realizados os testes de JPA, Unidade e Integração.
+#### O banco de dados está na máquina virtual dentro do GCP, foi utilizado o PostgreSQL.
 
 
 ### Contribuintes
